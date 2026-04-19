@@ -167,9 +167,7 @@ var customIcon = L.icon({
 
 		  // custom marker
         markers.push(
-          L.marker([lat, lon], {icon: customIcon,
-            opacity: c['Marker'] === 'Hidden' ? 0 : 0.1,
-		})
+          L.marker([lat, lon], {icon: customIcon})
         );
 	  }
 		
