@@ -167,11 +167,17 @@ var customIcon = L.icon({
 
 		  // custom marker
         markers.push(
-          L.marker([lat, lon], {icon: customIcon,
-			opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
-            interactive: c['Marker'] === 'Hidden' ? false : true,
-							   }));
+          L.marker([lat, lon], {icon: customIcon}, 
+				  opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
+            interactive: c['Marker'] === 'Hidden' ? false : true,)
+        );
 	  }
+
+      // Add chapter container
+      var container = $('<div></div>', {
+        id: 'container' + i,
+        class: 'chapter-container'
+      });
 
       // Add media and credits: YouTube, audio, or image
       var media = null;
