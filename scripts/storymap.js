@@ -99,7 +99,7 @@ $(window).on('load', function() {
         {
           attribution:
             'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          minZoom: 4,
+          minZoom: 1,
           maxZoom: 18,
           id: "mapbox/dark-v9",
           tileSize: 512,
