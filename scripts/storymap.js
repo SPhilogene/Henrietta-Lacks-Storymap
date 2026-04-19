@@ -170,7 +170,7 @@ var customIcon = L.icon({
           L.marker([lat, lon], {icon: customIcon,
 			opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
             interactive: c['Marker'] === 'Hidden' ? false : true,
-							   });
+							   }));
 	  }
 
       // Add media and credits: YouTube, audio, or image
