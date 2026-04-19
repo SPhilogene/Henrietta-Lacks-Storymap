@@ -82,17 +82,32 @@ $(window).on('load', function() {
   /**
    * Loads the basemap and adds it to the map
    */
-  function addBaseMap() {
-    var basemap = trySetting('_tileProvider', 'Stamen.TonerLite');
-    L.tileLayer.provider(basemap, {
-      maxZoom: 18,
+    function addBaseMap() {
+    // var basemap = trySetting('_tileProvider', 'Stamen.TonerLite');
+    // L.tileLayer.provider(basemap, {
+    //   maxZoom: 18,
       
-      // Pass the api key to most commonly used parameters
-      apiKey: trySetting('_tileProviderApiKey', ''),
-      apikey: trySetting('_tileProviderApiKey', ''),
-      key: trySetting('_tileProviderApiKey', ''),
-      accessToken: trySetting('_tileProviderApiKey', '')
-    }).addTo(map);
+    //   // Pass the api key to most commonly used parameters
+    //   apiKey: trySetting('_tileProviderApiKey', ''),
+    //   apikey: trySetting('_tileProviderApiKey', ''),
+    //   key: trySetting('_tileProviderApiKey', ''),
+    //   accessToken: trySetting('_tileProviderApiKey', '')
+    // }).addTo(map);
+
+    L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          minZoom: 4,
+          maxZoom: 18,
+          id: "mapbox/dark-v9",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
+        }
+      ).addTo(map);
   }
 
   function initMap(options, chapters) {
@@ -125,20 +140,15 @@ $(window).on('load', function() {
 
     var markers = [];
 
-    var markActiveColor = function(k) {
-      /* Removes marker-active class from all markers */
-      for (var i = 0; i < markers.length; i++) {
-        if (markers[i] && markers[i]._icon) {
-          markers[i]._icon.className = markers[i]._icon.className.replace(' marker-active', '');
+    // custom icon for markers
+var customIcon = L.icon({
+    iconUrl: 'media/sankofa-small.png',
+    iconSize:     [60, 60], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 
-          if (i == k) {
-            /* Adds marker-active class, which is orange, to marker k */
-            markers[k]._icon.className += ' marker-active';
-          }
-        }
-      }
-    }
-
+  
     var pixelsAbove = [];
     var chapterCount = 0;
 
@@ -155,25 +165,11 @@ $(window).on('load', function() {
 
         chapterCount += 1;
 
+		  // custom marker
         markers.push(
-          L.marker([lat, lon], {
-            icon: L.ExtraMarkers.icon({
-              icon: 'fa-number',
-              number: c['Marker'] === 'Numbered'
-                ? chapterCount
-                : (c['Marker'] === 'Plain'
-                  ? ''
-                  : c['Marker']), 
-              markerColor: c['Marker Color'] || 'blue'
-            }),
-            opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
-            interactive: c['Marker'] === 'Hidden' ? false : true,
-          }
-        ));
-
-      } else {
-        markers.push(null);
-      }
+          L.marker([lat, lon], {icon: customIcon})
+        );
+	  }
 
       // Add chapter container
       var container = $('<div></div>', {
@@ -307,8 +303,9 @@ $(window).on('load', function() {
           $('.chapter-container').removeClass("in-focus").addClass("out-focus");
           $('div#container' + i).addClass("in-focus").removeClass("out-focus");
 
-          currentlyInFocus = i;
-          markActiveColor(currentlyInFocus);
+          
+          // currentlyInFocus = i;
+          // markActiveColor(currentlyInFocus);
 
           // Remove overlay tile layer if needed
           if (overlay && map.hasLayer(overlay)) {
@@ -381,6 +378,7 @@ $(window).on('load', function() {
           // Fly to the new marker destination if latitude and longitude exist
           if (c['Latitude'] && c['Longitude']) {
             var zoom = c['Zoom'] ? c['Zoom'] : CHAPTER_ZOOM;
+            console.log(CHAPTER_ZOOM)
             map.flyTo([c['Latitude'], c['Longitude']], zoom, {
               animate: true,
               duration: 2, // default is 2 seconds
