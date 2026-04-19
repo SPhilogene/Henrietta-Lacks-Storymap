@@ -172,12 +172,9 @@ var customIcon = L.icon({
             interactive: c['Marker'] === 'Hidden' ? false : true,
         );
 	  }
+	}
 
-      // Add chapter container
-      var container = $('<div></div>', {
-        id: 'container' + i,
-        class: 'chapter-container'
-      });
+
 
 
       // Add media and credits: YouTube, audio, or image
