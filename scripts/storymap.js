@@ -82,7 +82,7 @@ $(window).on('load', function() {
   /**
    * Loads the basemap and adds it to the map
    */
-    function addBaseMap() {
+  function addBaseMap() {
     // var basemap = trySetting('_tileProvider', 'Stamen.TonerLite');
     // L.tileLayer.provider(basemap, {
     //   maxZoom: 18,
@@ -99,7 +99,7 @@ $(window).on('load', function() {
         {
           attribution:
             'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          minZoom: 1,
+          minZoom: 4,
           maxZoom: 18,
           id: "mapbox/dark-v9",
           tileSize: 512,
@@ -147,8 +147,8 @@ var customIcon = L.icon({
     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
+    
 
-  
     var pixelsAbove = [];
     var chapterCount = 0;
 
@@ -176,6 +176,7 @@ var customIcon = L.icon({
         id: 'container' + i,
         class: 'chapter-container'
       });
+
 
       // Add media and credits: YouTube, audio, or image
       var media = null;
@@ -302,7 +303,7 @@ var customIcon = L.icon({
           $('.chapter-container').removeClass("in-focus").addClass("out-focus");
           $('div#container' + i).addClass("in-focus").removeClass("out-focus");
 
-          
+          // LAST EDIT
           // currentlyInFocus = i;
           // markActiveColor(currentlyInFocus);
 
